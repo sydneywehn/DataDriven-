@@ -65,8 +65,54 @@ CREATE TABLE nba_matchup (
     PRIMARY KEY (matchup_id)
 );
 """
+
+create_nba_game_data_table = """
+CREATE TABLE nba_game_data (
+    team_game_id INT NOT NULL AUTO_INCREMENT,
+    gid VARCHAR(50),
+    tid VARCHAR(5),
+    fg INT,
+    fga INT,
+    fg_pct FLOAT,
+    fg3 INT,
+    fg3a INT,
+    fg3_pct FLOAT,
+    ft INT,
+    fta INT,
+    ft_pct FLOAT,
+    orb INT,
+    drb INT,
+    trb INT,
+    ast INT,
+    stl INT,
+    blk INT,
+    tov INT,
+    pf INT,
+    pts INT,
+    ts_pct FLOAT,
+    efg_pct FLOAT,
+    fg3a_per_fga_pct FLOAT,
+    fta_per_fga_pct FLOAT,
+    orb_pct FLOAT,
+    drb_pct FLOAT,
+    trb_pct FLOAT,
+    ast_pct FLOAT,
+    stl_pct FLOAT,
+    blk_pct FLOAT,
+    tov_pct FLOAT,
+    off_rtg FLOAT,
+    def_rtg FLOAT,
+    date INT NOT NULL,
+    PRIMARY KEY (team_game_id)
+);
+
+"""
+
+
+
 def execute_insert():
     execute_query(cnxn, create_nba_teams_table)
+    execute_query(cnxn, create_nba_matchup_table)
     execute_query(cnxn, create_nba_matchup_table)
     pass
 
@@ -76,7 +122,7 @@ def execute_insert():
 ### INSERT INTO TEAMS TABLE (tid = tor, name = Raptors, city = Toronto)
 
 # Data
-#teams = [['Toronto', 'Raptors', 'TOR'],
+teams = [['Toronto', 'Raptors', 'TOR'],
          ['Boston', 'Celtics', 'BOS'],
          ['Philadelphia', '76ers', 'PHI'],
          ['Cleveland', 'Cavaliers', 'CLE'],
