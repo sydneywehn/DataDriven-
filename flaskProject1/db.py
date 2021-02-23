@@ -109,6 +109,25 @@ CREATE TABLE nba_game_data (
 """
 
 
+create_betting_lines_table = """
+CREATE TABLE betting_lines (
+    bid INT NOT NULL AUTO_INCREMENT,
+    home_team VARCHAR(5),
+    away_team VARCHAR(5),
+    open_spread INT,
+    close_spread INT,
+    open_total INT,
+    close_total INT,
+    home_ml INT,
+    away_ml INT,
+    home_score INT,
+    away_score INT,
+    date INT NOT NULL,
+    PRIMARY KEY (bid)
+);
+"""
+
+
 
 def execute_insert():
     execute_query(cnxn, create_nba_teams_table)
@@ -169,6 +188,6 @@ teams = [['Toronto', 'Raptors', 'TOR'],
 # q1 = """
 # SELECT * FROM nba_game_data;
 # """
-# #print(read_query(cnxn, q1))
+# print(read_query(cnxn, q1))
 # def test():
 #     return read_query(cnxn, q1)

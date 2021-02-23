@@ -3,11 +3,18 @@ import json
 import requests
 from bs4 import BeautifulSoup
 import time
-import csv
+import pandas as pd
 from datetime import date
 
 
 
+
+
+
+
+
+
+# OLD STUFF
 
 # # get spreads
 # def get_betting_spreads(date):
@@ -89,23 +96,23 @@ from datetime import date
 
 # Get current day games and lines
 
-
-#get current date in number format
-cur_date = str(date.today()).replace('-', '')
-betting_page = requests.get(f'https://classic.sportsbookreview.com/betting-odds/')
-
-
-betting_page = BeautifulSoup(betting_page.text, 'html.parser')
-teams_list = []
-print(betting_page)
-for row in betting_page.find_all('div', {'class': 'eventLine-value'}):
-    teams_list.append(row.text)
-    print(row)
-betting_lines = []
-for item in betting_page.find_all('div', {'class': 'event-holder holder-complete'}):
-    for line in item.find_all('div', {'class': 'el-div eventLine-book'}):
-        if line.text != '':
-            betting_lines.append(line.text)
-            break
-
-betting_lines = [line.replace('\xa0', ' ') for line in betting_lines]
+#
+# #get current date in number format
+# cur_date = str(date.today()).replace('-', '')
+# betting_page = requests.get(f'https://classic.sportsbookreview.com/betting-odds/')
+#
+#
+# betting_page = BeautifulSoup(betting_page.text, 'html.parser')
+# teams_list = []
+# print(betting_page)
+# for row in betting_page.find_all('div', {'class': 'eventLine-value'}):
+#     teams_list.append(row.text)
+#     print(row)
+# betting_lines = []
+# for item in betting_page.find_all('div', {'class': 'event-holder holder-complete'}):
+#     for line in item.find_all('div', {'class': 'el-div eventLine-book'}):
+#         if line.text != '':
+#             betting_lines.append(line.text)
+#             break
+#
+# betting_lines = [line.replace('\xa0', ' ') for line in betting_lines]

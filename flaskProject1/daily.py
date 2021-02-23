@@ -251,10 +251,20 @@ def update_nba_game_data_and_matchup():
                  float(val[30]), val[33])]
         execute_list_query(cnxn, insert_into_teams, vals)
     # add insert command tomorrow for matchups
+    # Insert Query
+    insert_into_teams = '''
+        INSERT INTO nba_matchup (home_team, away_team, gid, date) 
+        VALUES (%s, %s, %s, %s)
+        '''
+    # Insert into db
+    for row in df_matchups.iterrows():
+        val = list(row[1].values)
+        vals = [(val[0], val[1], val[2], val[3])]
+        execute_list_query(cnxn, insert_into_teams, vals)
 
 
 print(cur_day_nba_matchups())
 # confirm it works
-# #update_nba_game_data_and_matchup()
+update_nba_game_data_and_matchup()
 # q='SELECT * from nba_game_data WHERE date=20210201;'
 # print(read_query(cnxn,q))
