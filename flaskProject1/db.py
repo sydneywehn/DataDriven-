@@ -112,8 +112,8 @@ CREATE TABLE nba_game_data (
 create_betting_lines_table = """
 CREATE TABLE betting_lines (
     bid INT NOT NULL AUTO_INCREMENT,
-    home_team VARCHAR(5),
-    away_team VARCHAR(5),
+    home_team VARCHAR(50),
+    away_team VARCHAR(50),
     open_spread INT,
     close_spread INT,
     open_total INT,
@@ -132,11 +132,11 @@ CREATE TABLE betting_lines (
 def execute_insert():
     execute_query(cnxn, create_nba_teams_table)
     execute_query(cnxn, create_nba_matchup_table)
-    execute_query(cnxn, create_nba_matchup_table)
+    execute_query(cnxn, create_betting_lines_table)
     pass
 
 
-
+#print(execute_insert())
 
 ### INSERT INTO TEAMS TABLE (tid = tor, name = Raptors, city = Toronto)
 
