@@ -1,10 +1,21 @@
+############# nba_injuries_scraper.py ###############
+# Point: Scrapes from cbs sports the nba injuries
+
+### Functions:
+# cur_day_injuries() - current days nba injuries by team
+####################################
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
 import csv
 from datetime import date
+import json
 
+
+# Scrape NBA injuries from: https://www.cbssports.com/nba/injuries/
+# Return data frame with: player name, position, date, injury, notes, team
 def cur_day_injuries():
 
     injuries_page = requests.get(f'https://www.cbssports.com/nba/injuries/')
@@ -64,8 +75,12 @@ def cur_day_injuries():
     df['notes'] = notes
 
     df['team'] = teams
-    return df
+
+    # need to make that a parameter
+    result = df.loc[df['team'] == 'Phoenix'].to_json(orient="records")
+    parsed = json.loads(result)
+    return json.dumps(parsed)
 
 
 
-print(cur_day_injuries())
+#print(cur_day_injuries())

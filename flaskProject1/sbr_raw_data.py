@@ -1,5 +1,5 @@
 import pandas as pd
-from db import execute_list_query, read_query
+from db import execute_list_query, read_query, execute_query
 import mysql.connector
 from mysql.connector import Error
 import itertools
@@ -14,6 +14,37 @@ config = {
 config['database'] = 'ddx_db'  # add new database to config dict
 cnxn = mysql.connector.connect(**config)
 
+
+team_handles = {'Toronto': 'TOR',
+                     'Boston': 'BOS',
+                     'Philadelphia': 'PHI',
+                     'Cleveland': 'CLE',
+                     'Indiana': 'IND',
+                     'Miami': 'MIA',
+                     'Milwaukee': 'MIL',
+                     'Washington': 'WAS',
+                     'Detroit': 'DET',
+                     'Charlotte': 'CHO',
+                     'NewYork': 'NYK',
+                     'Brooklyn': 'BRK',
+                     'Chicago': 'CHI',
+                     'Orlando': 'ORL',
+                     'Atlanta': 'ATL',
+                     'Houston': 'HOU',
+                     'GoldenState': 'GSW',
+                     'Portland': 'POR',
+                     'OklahomaCity': 'OKC',
+                     'Utah': 'UTA',
+                     'NewOrleans': 'NOP',
+                     'SanAntonio': 'SAS',
+                     'Minnesota': 'MIN',
+                     'Denver': 'DEN',
+                     'LAClippers': 'LAC',
+                     'LALakers': 'LAL',
+                     'Sacramento': 'SAC',
+                     'Dallas': 'DAL',
+                     'Memphis': 'MEM',
+                     'Phoenix': 'PHO'}
 
 
 # Process raw data from sportsbook review
@@ -71,11 +102,19 @@ def clean_sbr_data():
 
     #print(len(h_team), len(open_spread), len(close_spread), len(open_total), len(close_spread), len(date))
 
+    # Need to clean team to have same format as in team_handles
+    h_teams = []
+    for h in h_team:
+        h_teams.append(team_handles[h].lower())
+    v_teams = []
+    for v in v_team:
+        v_teams.append(team_handles[v].lower())
+
     final_df = pd.DataFrame()
-    final_df['h_team'] = h_team
+    final_df['h_team'] = h_teams
     final_df['h_score'] = h_score
     final_df['h_ml'] = h_ml
-    final_df['a_team'] = v_team
+    final_df['a_team'] = v_teams
     final_df['a_score'] = v_score
     final_df['a_ml'] = v_ml
     final_df['open_total'] = open_total
@@ -87,7 +126,7 @@ def clean_sbr_data():
     #print(final_df.head())
     return final_df
 
-# print(clean_sbr_data().head())
+print(clean_sbr_data().head())
 
 def insert_sbr_data():
 
@@ -111,6 +150,16 @@ def insert_sbr_data():
         return "Something did not work"
 
 
+
+
+def drop_betting_lines(cnxn):
+    q = '''DROP table betting_lines'''
+
+    execute_query(cnxn, q)
+    return 'Dropped'
+
+#drop_betting_lines(cnxn)
+insert_sbr_data()
 
 
 
